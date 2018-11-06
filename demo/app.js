@@ -3,6 +3,14 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 const colors = ['7732bb', '047cc0', '00884b', 'e3bc13', 'db7c00', 'aa231f'];
+const images = ['test1.jpg', 'test2.jpg', 'test3.jpg', 'test4.jpg', 'test5.jpg']; 
+const styles = {
+  image: {
+    display: 'flex',
+    'justifyContent': 'center',
+    'alignItems': 'center',
+  }
+};
 
 class App extends React.Component {
   constructor() {
@@ -28,130 +36,29 @@ class App extends React.Component {
 
   render() {
     return (
-      <div style={{ width: '50%', margin: 'auto' }}>
+      <div style={{ width: '375px', margin: 'auto' }}>
         <Carousel
-          withoutControls={this.state.withoutControls}
-          transitionMode={this.state.transitionMode}
-          cellAlign={this.state.cellAlign}
-          slidesToShow={this.state.slidesToShow}
-          wrapAround={this.state.wrapAround}
-          slideIndex={this.state.slideIndex}
-          heightMode={this.state.heightMode}
-          renderTopCenterControls={({ currentSlide }) => (
-            <div
-              style={{
-                fontFamily: 'Helvetica',
-                color: '#fff',
-                textDecoration: this.state.underlineHeader
-                  ? 'underline'
-                  : 'none'
-              }}
-            >
-              Nuka Carousel: Slide {currentSlide + 1}
-            </div>
-          )}
+         wrapAround={true}
+         slidesToShow={1.0}
+         withoutControls={true}
+         cellSpacing={5}
+         heightMode={'current'}
         >
-          {colors.slice(0, this.state.length).map((color, index) => (
-            <img
-              src={`http://placehold.it/1000x400/${color}/ffffff/&text=slide${index +
-                1}`}
-              alt={`Slide ${index + 1}`}
-              key={color}
-              onClick={this.handleImageClick}
-              style={{
-                height:
-                  this.state.heightMode === 'current' ? 100 * (index + 1) : 400
-              }}
-            />
-          ))}
-        </Carousel>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div>
-            <button onClick={() => this.setState({ slideIndex: 0 })}>1</button>
-            <button onClick={() => this.setState({ slideIndex: 1 })}>2</button>
-            <button onClick={() => this.setState({ slideIndex: 2 })}>3</button>
-            <button onClick={() => this.setState({ slideIndex: 3 })}>4</button>
-            <button onClick={() => this.setState({ slideIndex: 4 })}>5</button>
-            <button onClick={() => this.setState({ slideIndex: 5 })}>6</button>
-          </div>
-          <div>
-            <button
-              onClick={() =>
-                this.setState({
-                  length: 2
-                })
-              }
-            >
-              2 Slides Only
-            </button>
-            <button
-              onClick={() =>
-                this.setState({
-                  transitionMode:
-                    this.state.transitionMode === 'fade' ? 'scroll' : 'fade'
-                })
-              }
-            >
-              Toggle Fade {this.state.transitionMode === 'fade' ? 'Off' : 'On'}
-            </button>
-            <button
-              onClick={() =>
-                this.setState(prevState => ({
-                  wrapAround: !prevState.wrapAround
-                }))
-              }
-            >
-              Toggle Wrap Around
-            </button>
-          </div>
-        </div>
-        {this.state.transitionMode !== 'fade' && (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            {this.state.slidesToShow > 1.0 && (
-              <div>
-                <button onClick={() => this.setState({ cellAlign: 'left' })}>
-                  Left
-                </button>
-                <button onClick={() => this.setState({ cellAlign: 'center' })}>
-                  Center
-                </button>
-                <button onClick={() => this.setState({ cellAlign: 'right' })}>
-                  Right
-                </button>
+        {images.map((image, index) => {
+          return (
+              <div
+                key={index}
+                style={styles.image}
+              >
+                <img
+                src={`${image}`}
+                key={index}
+                style={{ height: '228px'}}
+                />
               </div>
-            )}
-            <div style={{ marginLeft: 'auto' }}>
-              <button
-                onClick={() =>
-                  this.setState({
-                    slidesToShow: this.state.slidesToShow > 1.0 ? 1.0 : 1.25
-                  })
-                }
-              >
-                Toggle Partially Visible Slides
-              </button>
-              <button
-                onClick={() =>
-                  this.setState({
-                    heightMode:
-                      this.state.heightMode === 'current' ? 'max' : 'current'
-                  })
-                }
-              >
-                Toggle Height Mode Current
-              </button>
-              <button
-                onClick={() =>
-                  this.setState({
-                    withoutControls: !this.state.withoutControls
-                  })
-                }
-              >
-                Toggle Controls
-              </button>
-            </div>
-          </div>
-        )}
+          );
+        })}
+        </Carousel>
       </div>
     );
   }
